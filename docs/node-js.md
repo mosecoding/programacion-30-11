@@ -16,7 +16,7 @@ Esta guía te mostrará cómo instalar **Node.js** en Windows usando el instalad
 
    Haz clic en el botón de **LTS** para descargar el instalador.
 
-   ![LTS](./images/node-js/LTS.png "LTS")
+   ![LTS](../images/node-js/LTS.png "LTS")
 
 ---
 
@@ -27,23 +27,23 @@ Esta guía te mostrará cómo instalar **Node.js** en Windows usando el instalad
 
    - **Paso 1:** Haz clic en **Next** para continuar.
 
-   ![Step-1](./images/node-js/step-1.png "Step-1")
+   ![Step-1](../images/node-js/step-1.png "Step-1")
 
    - **Paso 2:** Acepta los términos de la licencia y haz clic en **Next**.
 
-   ![Step-2](./images/node-js/step-2.png "Step-2")
+   ![Step-2](../images/node-js/step-2.png "Step-2")
 
    - **Paso 3:** Selecciona la ubicación de instalación (puedes dejarla por defecto) y haz clic en **Next**.
 
-   ![Step-3](./images/node-js/step-3.png "Step-3")
+   ![Step-3](../images/node-js/step-3.png "Step-3")
 
    - **Paso 4:** Asegúrate de que la opción **Add to PATH** esté marcada y haz clic en **Next**.
 
-   ![Step-4](./images/node-js/step-4.png "Step-4")
+   ![Step-4](../images/node-js/step-4.png "Step-4")
 
    - **Paso 5:** Haz clic en **Install** para comenzar la instalación.
 
-   ![Step-5](./images/node-js/step-5.png "Step-5")
+   ![Step-5](../images/node-js/step-5.png "Step-5")
 
 3. Espera a que se complete la instalación y haz clic en **Finish** cuando termine.
 
@@ -60,4 +60,4 @@ Para asegurarte de que Node.js se ha instalado correctamente:
    node -v
    ```
 
-   ![Version](./images/node-js/version.png "Version")
+   ![Version](../images/node-js/version.png "Version")

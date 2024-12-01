@@ -29,7 +29,7 @@
     tsc -v
    ```
 
-   ![Version](./images/typescript/version.png "Version")
+   ![Version](../images/typescript/version.png "Version")
 
 ## Paso 3: Configurar un Proyecto TypeScript
 
@@ -44,10 +44,10 @@
     tsc --init
    ```
 
-   ![Config](./images/typescript/ts-config.png "Config")
+   ![Config](../images/typescript/ts-config.png "Config")
 
 ## Código de prueba
 
-![Code](./images/typescript/code.png "Code")
+![Code](../images/typescript/code.png "Code")
 
-![Error](./images/typescript/error.png "Error")
+![Error](../images/typescript/error.png "Error")
