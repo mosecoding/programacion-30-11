@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <div
+      class="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full text-gray-700"
+    >
+      <h1 class="text-3xl font-bold text-center mb-4">Clima en Lima</h1>
+
+      <div id="loading" class="text-center">
+        <p>Cargando...</p>
+      </div>
+
+      <div id="weather" class="text-center" style="display: none;">
+        <img
+          id="weather-icon"
+          class="mx-auto w-20 h-20 mb-4"
+          alt="Ícono del clima"
+        />
+        <p id="description" class="text-xl mb-2 font-semibold"></p>
+        <p id="temp" class="text-5xl font-bold text-blue-500 mb-2"></p>
+        <p id="feels-like" class="text-sm text-gray-600"></p>
+        <p id="location" class="text-lg font-medium text-gray-500"></p>
+        <div class="mt-4">
+          <p id="wind" class="text-sm mb-1">Viento: <span></span></p>
+          <p id="humidity" class="text-sm mb-1">Humedad: <span></span></p>
+          <p id="local-time" class="text-sm">Hora local: <span></span></p>
+        </div>
+      </div>
+    </div>
+
+    <script src="weather.js"></script>
+  </body>
+</html>
