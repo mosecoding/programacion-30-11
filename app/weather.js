@@ -40,7 +40,6 @@ const fetchWeather = () => __awaiter(void 0, void 0, void 0, function* () {
             humidityElement.textContent = "";
             localTimeElement.textContent = "";
             weatherIconElement.src = "";
-            // Asegúrate de ocultar el mensaje de carga y mostrar el error.
             loadingElement.style.display = "none";
             weatherElement.style.display = "block";
             return;
