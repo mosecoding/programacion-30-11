@@ -19,9 +19,14 @@ const windElement = document.getElementById("wind");
 const humidityElement = document.getElementById("humidity");
 const localTimeElement = document.getElementById("local-time");
 const weatherIconElement = document.getElementById("weather-icon");
+const loadingElement = document.getElementById("loading");
+const weatherElement = document.getElementById("weather");
 // Función para obtener los datos del clima desde la API de OpenWeatherMap.
 const fetchWeather = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        // Mostrar el mensaje de carga y ocultar el resto.
+        loadingElement.style.display = "block";
+        weatherElement.style.display = "none";
         // Hacer la solicitud a la API para obtener los datos del clima.
         const response = yield fetch(apiUrl);
         // Verificar si la respuesta es exitosa.
@@ -35,9 +40,12 @@ const fetchWeather = () => __awaiter(void 0, void 0, void 0, function* () {
             humidityElement.textContent = "";
             localTimeElement.textContent = "";
             weatherIconElement.src = "";
+            // Asegúrate de ocultar el mensaje de carga y mostrar el error.
+            loadingElement.style.display = "none";
+            weatherElement.style.display = "block";
             return;
         }
-        // Convertir la respuesta en formato JSON.
+        // Convertir la respuesta en formato JSON con el tipo `WeatherResponse`.
         const data = yield response.json();
         // Crear un objeto `weather` con los datos procesados para actualizar la UI.
         const weather = {
@@ -64,6 +72,8 @@ const fetchWeather = () => __awaiter(void 0, void 0, void 0, function* () {
         // Si el icono incluye "d", significa que es de día. De lo contrario, es de noche.
         const isDay = weather.icon.includes("d");
         document.body.style.backgroundColor = isDay ? "#fef9c3" : "#1e3a8a"; // Cambiar el color del fondo según el día o la noche.
+        loadingElement.style.display = "none";
+        weatherElement.style.display = "block";
     }
     catch (error) {
         // Si hay un error en la solicitud, mostrar un mensaje y limpiar la UI.
@@ -75,6 +85,8 @@ const fetchWeather = () => __awaiter(void 0, void 0, void 0, function* () {
         humidityElement.textContent = "";
         localTimeElement.textContent = "";
         weatherIconElement.src = "";
+        loadingElement.style.display = "none";
+        weatherElement.style.display = "block";
     }
 });
 fetchWeather();

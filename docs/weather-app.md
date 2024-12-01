@@ -23,19 +23,30 @@ Este proyecto es una aplicación web sencilla que muestra el clima actual en Lim
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-gray-100 flex justify-center items-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
-      <h1 class="text-2xl font-bold text-center text-gray-700 mb-4">
-        Clima en Lima
-      </h1>
-      <div id="weather" class="text-center">
-        <p class="text-xl text-gray-600" id="description">Cargando...</p>
-        <p class="text-4xl font-bold text-blue-500" id="temp"></p>
-        <p class="text-gray-500" id="location"></p>
-        <p class="text-gray-600" id="feels-like"></p>
-        <p class="text-gray-600" id="wind"></p>
-        <p class="text-gray-600" id="humidity"></p>
-        <p class="text-gray-600" id="local-time"></p>
-        <img id="weather-icon" src="" alt="Weather icon" />
+    <div
+      class="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full text-gray-700"
+    >
+      <h1 class="text-3xl font-bold text-center mb-4">Clima en Lima</h1>
+
+      <div id="loading" class="text-center">
+        <p>Cargando...</p>
+      </div>
+
+      <div id="weather" class="text-center" style="display: none;">
+        <img
+          id="weather-icon"
+          class="mx-auto w-20 h-20 mb-4"
+          alt="Ícono del clima"
+        />
+        <p id="description" class="text-xl mb-2 font-semibold"></p>
+        <p id="temp" class="text-5xl font-bold text-blue-500 mb-2"></p>
+        <p id="feels-like" class="text-sm text-gray-600"></p>
+        <p id="location" class="text-lg font-medium text-gray-500"></p>
+        <div class="mt-4">
+          <p id="wind" class="text-sm mb-1">Viento: <span></span></p>
+          <p id="humidity" class="text-sm mb-1">Humedad: <span></span></p>
+          <p id="local-time" class="text-sm">Hora local: <span></span></p>
+        </div>
       </div>
     </div>
 
@@ -43,10 +54,42 @@ Este proyecto es una aplicación web sencilla que muestra el clima actual en Lim
   </body>
 </html>
 ```
+
 ## 2. `weather.ts`
 
 ```typescript
-// Definir la interfaz que representa la estructura de los datos del clima que vamos a obtener.
+// Tipado completo de la respuesta de la API
+interface WeatherResponse {
+  weather: {
+    id: number;
+    main: string;
+    description: string;
+    icon: string;
+  }[];
+  main: {
+    temp: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
+    pressure: number;
+    humidity: number;
+  };
+  wind: {
+    speed: number;
+    deg: number;
+  };
+  sys: {
+    type: number;
+    id: number;
+    country: string;
+    sunrise: number;
+    sunset: number;
+  };
+  name: string;
+  cod: number;
+}
+
+// Tipado para los datos que usaremos en la UI
 interface WeatherData {
   description: string;
   temp: number;
@@ -74,10 +117,16 @@ const localTimeElement = document.getElementById("local-time") as HTMLElement;
 const weatherIconElement = document.getElementById(
   "weather-icon"
 ) as HTMLImageElement;
+const loadingElement = document.getElementById("loading") as HTMLElement;
+const weatherElement = document.getElementById("weather") as HTMLElement;
 
 // Función para obtener los datos del clima desde la API de OpenWeatherMap.
 const fetchWeather = async (): Promise<void> => {
   try {
+    // Mostrar el mensaje de carga y ocultar el resto.
+    loadingElement.style.display = "block";
+    weatherElement.style.display = "none";
+
     // Hacer la solicitud a la API para obtener los datos del clima.
     const response = await fetch(apiUrl);
 
@@ -93,11 +142,15 @@ const fetchWeather = async (): Promise<void> => {
       humidityElement.textContent = "";
       localTimeElement.textContent = "";
       weatherIconElement.src = "";
+
+      // Asegúrate de ocultar el mensaje de carga y mostrar el error.
+      loadingElement.style.display = "none";
+      weatherElement.style.display = "block";
       return;
     }
 
-    // Convertir la respuesta en formato JSON.
-    const data = await response.json();
+    // Convertir la respuesta en formato JSON con el tipo `WeatherResponse`.
+    const data: WeatherResponse = await response.json();
 
     // Crear un objeto `weather` con los datos procesados para actualizar la UI.
     const weather: WeatherData = {
@@ -128,6 +181,9 @@ const fetchWeather = async (): Promise<void> => {
     // Si el icono incluye "d", significa que es de día. De lo contrario, es de noche.
     const isDay: boolean = weather.icon.includes("d");
     document.body.style.backgroundColor = isDay ? "#fef9c3" : "#1e3a8a"; // Cambiar el color del fondo según el día o la noche.
+
+    loadingElement.style.display = "none";
+    weatherElement.style.display = "block";
   } catch (error) {
     // Si hay un error en la solicitud, mostrar un mensaje y limpiar la UI.
     console.error("Error al obtener el clima:", error);
@@ -138,7 +194,11 @@ const fetchWeather = async (): Promise<void> => {
     humidityElement.textContent = "";
     localTimeElement.textContent = "";
     weatherIconElement.src = "";
+
+    loadingElement.style.display = "none";
+    weatherElement.style.display = "block";
   }
 };
 
 fetchWeather();
+```
